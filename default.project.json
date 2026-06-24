@@ -1,0 +1,44 @@
+{
+  "name": "ATF_Suite",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "Modules":{
+        "$className": "Folder",
+        "PropPlacer":{
+          "$path":"src/PropPlacer",
+          "QuickZone":{
+            "$path":"src/Common/quick_zone"
+          },
+          "ReplicationPP":{
+            "$path":"src/Common/ReplicationPP"
+          },
+          "Socket":{
+            "$path":"src/Common/Socket.luau"
+          },
+          "StateTracker":{
+            "$path":"src/Common/StateTracker.luau"
+          },
+          "signal":{
+            "$path":"src/Common/signal.luau"
+          }
+        }
+      }
+    },
+
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    }
+  }
+}

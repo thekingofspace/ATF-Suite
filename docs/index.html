@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <meta name="description" content="ATF Suite — open source tools for making your own ATF game." />
+    <title>ATF Suite</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div id="app">Loading ATF Suite docs…</div>
+    <script>
+        window.$docsify = {
+            name: 'ATF Suite',
+            loadSidebar: true,
+            subMaxLevel: 0,
+            auto2top: true,
+            homepage: 'README.md',
+            alias: {
+                '/.*/_sidebar.md': '/_sidebar.md'
+            },
+            search: {
+                placeholder: 'Search the docs',
+                noData: 'Nothing found.',
+                depth: 6
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-lua.min.js"></script>
+</body>
+</html>

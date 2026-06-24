@@ -1,0 +1,28 @@
+# Selene configuration for the ATF_Suite Roblox project.
+# Docs: https://kampfkarren.github.io/selene/
+
+# Use Roblox's standard library: globals like `game`, `workspace`, `Instance`,
+# Roblox data types, and Luau-aware parsing/lints. This std is bundled with
+# selene, so no `roblox.yml` needs to be generated.
+std = "roblox"
+
+# Glob patterns for files/folders selene should not lint. The Common folder
+# holds vendored/third-party modules (Socket, ProfileStore, etc.), so it's
+# excluded from our linting.
+exclude = ["src/Common/**"]
+
+# Lint severities: "allow" (off), "warn", or "deny" (treated as an error).
+# Only overrides to the defaults are listed here; everything else keeps selene's
+# built-in default. Full list: https://kampfkarren.github.io/selene/lints.html
+[lints]
+# Flag assignments to variables that were never declared with `local` — these
+# create accidental globals, a common and hard-to-spot bug source in Luau.
+unscoped_variables = "warn"
+
+# Allow multiple statements on one line, e.g. one-line guards like
+# `if cond then error(...) end`.
+multiple_statements = "allow"
+
+# Off by default. Uncomment to also flag reads/writes of the `_G` / `shared`
+# global tables, encouraging explicit module dependencies instead.
+# global_usage = "warn"
