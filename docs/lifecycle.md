@@ -117,11 +117,38 @@ stateDiagram-v2
     Removed --> [*]
 ```
 
-- **Grace** — leaving a zone doesn't deload immediately. The clone is kept for 5
-  seconds; come back and it stays (and re-syncs anything missed), otherwise it's
-  destroyed.
-- **Eviction** — separately, a master model nobody has cloned from for a while is
-  dumped to free memory. The clones on the map stay; the model is re-requested if
-  it's ever needed again.
+The **Grace** and **Unloaded** states above are driven by the cleanup scheduler.
+
+## The cleanup scheduler
+
+The client runs a single `RunService.Heartbeat` loop for all timed cleanup —
+nothing uses `task.delay`, so every timer can be cancelled the moment you change
+your mind (like walking back into a zone).
+
+```mermaid
+flowchart TD
+    hb["RunService.Heartbeat — every frame"]
+    hb --> grace{"left a room past its 5s grace?"}
+    hb --> refresh{"re-entry refresh due (3s)?"}
+    hb --> evict{"master unused for 120s?"}
+    grace -->|yes| deload["deload the room's clones"]
+    refresh -->|yes| refetch["GetProps + reconcile"]
+    evict -->|yes| dump["destroy the master model"]
+```
+
+Three jobs run off it:
+
+- **Grace deload — 5s.** Leaving a zone doesn't unload anything right away. A 5s
+  timer starts; walk back in and it's cancelled (the clones stay), otherwise the
+  room's clones are destroyed. If you leave mid-load, the timer doesn't even start
+  until the load finishes.
+- **Re-entry refresh — 3s.** When you walk back in within grace, a 3s timer
+  schedules a `GetProps` re-fetch. The delay clears the server's request debounce,
+  and the reconcile applies anything that moved, scaled, was added, or removed
+  while you were gone.
+- **Master eviction — 120s.** A replicated **master** model nobody has cloned from
+  for ~2 minutes is destroyed to free memory. The **clones already on the map stay**
+  — only the hidden source is dumped, and it's re-requested automatically if a prop
+  needs it again.
 
 See [PropPlacer](/api/propplacer.md) for the API behind each box.
