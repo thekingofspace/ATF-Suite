@@ -18,3 +18,4 @@ that hold them, and an in-game editor for transforming them.
 - [PropObject](/api/propobject.md) — a reusable template that spawns props
 - [Zone](/api/zone.md) — a room that groups and replicates props
 - [ScaleManager](/api/scalemanager.md) — an in-game move / rotate / resize editor
+
