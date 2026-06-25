@@ -10,7 +10,32 @@
 </head>
 <body>
     <div id="app">Loading ATF Suite docs…</div>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: 'base',
+            flowchart: { curve: 'basis', padding: 18, nodeSpacing: 50, rankSpacing: 60, useMaxWidth: true },
+            themeVariables: {
+                darkMode: true,
+                fontFamily: '"Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif',
+                fontSize: '15px',
+                background: 'transparent',
+                mainBkg: '#1b2230',
+                primaryColor: '#1b2230',
+                primaryTextColor: '#e6edf3',
+                primaryBorderColor: '#00aaff',
+                nodeBorder: '#00aaff',
+                lineColor: '#58c4ff',
+                edgeLabelBackground: '#0d1117',
+                clusterBkg: '#0d1117',
+                clusterBorder: '#244a6e',
+                titleColor: '#58c4ff',
+                secondaryColor: '#161b22',
+                tertiaryColor: '#0d1117'
+            }
+        });
         window.$docsify = {
             name: 'ATF Suite',
             loadSidebar: true,
@@ -24,7 +49,26 @@
                 placeholder: 'Search the docs',
                 noData: 'Nothing found.',
                 depth: 6
-            }
+            },
+            markdown: {
+                renderer: {
+                    code: function (code, lang) {
+                        if (lang === 'mermaid') {
+                            return '<div class="mermaid">' + code + '</div>';
+                        }
+                        return this.origin.code.apply(this, arguments);
+                    }
+                }
+            },
+            plugins: [
+                function (hook) {
+                    hook.doneEach(function () {
+                        if (window.mermaid) {
+                            mermaid.run({ querySelector: '.mermaid' });
+                        }
+                    });
+                }
+            ]
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
