@@ -433,12 +433,10 @@ body {
     white-space: nowrap;
 }
 
-/* edge labels as accent pills — Mermaid v10 puts the text in span.edgeLabel */
-.markdown-section .mermaid span.edgeLabel,
-.markdown-section .mermaid .edgeLabel p,
-.markdown-section .mermaid .edgeLabel .nodeLabel {
+/* edge labels: give the floating text a readable backdrop (Mermaid v10 puts the
+   text in span.edgeLabel, sometimes wrapping a nested span/p) */
+.markdown-section .mermaid span.edgeLabel {
     display: inline-block;
-    margin: 0;
     padding: 2px 10px !important;
     background: #15273a !important;
     color: var(--accent-2) !important;
@@ -449,7 +447,17 @@ body {
     white-space: nowrap;
 }
 
-/* empty edge-label wrappers shouldn't show a stray pill */
+/* keep the pill on the outer wrapper only — flatten anything nested inside it */
+.markdown-section .mermaid span.edgeLabel .edgeLabel,
+.markdown-section .mermaid span.edgeLabel p {
+    margin: 0;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    color: inherit !important;
+}
+
+/* don't render a stray pill for unlabelled edges */
 .markdown-section .mermaid span.edgeLabel:empty {
     display: none;
 }
